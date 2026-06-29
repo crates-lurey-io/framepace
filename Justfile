@@ -1,24 +1,24 @@
-_default:
-    cargo just --list -u
+default:
+    @just --list
 
-init:
-    cargo tool --install
+# ── Setup ────────────────────────────────────────────────────────────────────
+
+setup-tools:
+    cargo bin --install
 
 # ── Formatting ────────────────────────────────────────────────────────────────
 
-format: format-fix
-
-format-check:
+format:
     cargo fmt --all -- --check
 
-format-fix:
+fmt-check: format
+
+fmt-fix:
     cargo fmt --all
 
 # ── Linting ──────────────────────────────────────────────────────────────────
 
-lint: lint-check
-
-lint-check:
+lint:
     cargo clippy --no-deps --all-targets --all-features -- -D warnings
 
 lint-fix:
@@ -30,7 +30,7 @@ compile:
     cargo check --all-features
 
 doc:
-    cargo doc --all-features --no-deps --open --lib
+    cargo doc --no-deps --document-private-items --all-features
 
 doc-gen:
     cargo clean --doc
@@ -40,38 +40,33 @@ doc-gen:
 
 # ── Test ─────────────────────────────────────────────────────────────────────
 
-test *ARGS:
-    cargo tool cargo-nextest run {{ARGS}}
+test *args:
+    cargo nextest run {{args}}
 
-test-doc *ARGS:
-    cargo test {{ARGS}} --doc
+test-doc *args:
+    cargo test {{args}} --doc
 
 test-all:
-    cargo just test --all-features
-    cargo just test-doc --all-features
+    just test --all-features
+    just test-doc --all-features
 
 # ── Coverage ─────────────────────────────────────────────────────────────────
 
-coverage *ARGS:
-    cargo tool cargo-llvm-cov --lib --open
+coverage *args:
+    cargo llvm-cov --lib --open {{args}}
 
 coverage-gen:
-    cargo tool cargo-llvm-cov --lib --lcov --output-path lcov.info
-
-# ── Checks ───────────────────────────────────────────────────────────────────
-
-semver-checks:
-    cargo tool cargo-semver-checks
+    cargo llvm-cov --lib --lcov --output-path lcov.info
 
 msrv:
-    cargo tool cargo-hack check --rust-version --workspace --all-targets --ignore-private
+    cargo hack check --rust-version --all-targets
 
 # ── Composite ────────────────────────────────────────────────────────────────
 
 fix:
-    cargo just format-fix
-    cargo just lint-fix
+    just fmt-fix
+    just lint-fix
 
 check:
-    cargo just format
-    cargo just lint
+    just format
+    just lint

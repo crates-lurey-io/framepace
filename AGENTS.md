@@ -19,10 +19,9 @@ Key rules enforced by CI:
 
 ## Code style
 
-- `cargo just check` before committing (format + clippy with all pedantic and
-  nursery lints as errors).
-- `cargo just test-all` to run all tests including doctests.
-- `cargo just semver-checks` to verify no accidental breaking changes.
+- `just check` before committing (format + clippy with all pedantic and nursery
+  lints as errors). Requires `just` and `cargo-nextest` installed locally.
+- `just test-all` to run all tests including doctests.
 - All public items must have doc comments with at least one `# Example`.
 - No `eprintln!` or `println!` in library code.
 - `unsafe_code` is `forbid`; no unsafe blocks anywhere.

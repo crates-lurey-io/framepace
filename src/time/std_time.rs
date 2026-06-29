@@ -1,4 +1,4 @@
-//! [`StdTime`]: a [`TimeSource`][super::TimeSource] backed by
+//! [`StdTime`]: a [`TimeSource`] backed by
 //! [`std::time::Instant`].
 
 use std::sync::OnceLock;
@@ -11,7 +11,7 @@ use super::TimeSource;
 /// This is the [`DefaultTime`][crate::DefaultTime] on all native targets.
 ///
 /// On WebAssembly, `std::time::Instant` may not be available. Implement
-/// [`TimeSource`][crate::TimeSource] using `performance.now()` and pass it as
+/// [`TimeSource`] using `performance.now()` and pass it as
 /// the `T` parameter of [`FrameTimer`][crate::FrameTimer].
 #[non_exhaustive]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
