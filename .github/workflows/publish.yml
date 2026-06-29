@@ -25,20 +25,15 @@ jobs:
           echo "version=$TAG_VERSION" >> "$GITHUB_OUTPUT"
         id: version
 
-      - name: Install Tools
-        uses: cargo-bins/cargo-binstall@v1.13.0
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just, cargo-nextest, cargo-hack
 
-      - name: Check
-        run: cargo just check
+      - run: just check
 
-      - name: Test
-        run: cargo just test-all
+      - run: just test-all
 
-      - name: Semver Checks
-        run: cargo just semver-checks
-
-      - name: MSRV Check
-        run: cargo just msrv
+      - run: just msrv
 
       - name: Extract changelog for this version
         run: |
@@ -52,17 +47,14 @@ jobs:
             found { print }
           ' CHANGELOG.md > release-notes.md
 
-      - name: Publish to crates.io
-        uses: rust-lang/crates-io-auth-action@v1
+      - uses: rust-lang/crates-io-auth-action@v1
         id: auth
 
-      - name: cargo publish
-        run: cargo publish --allow-dirty
+      - run: cargo publish --allow-dirty
         env:
           CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v2
         with:
           body_path: release-notes.md
           prerelease: ${{ contains(steps.version.outputs.version, '-') }}

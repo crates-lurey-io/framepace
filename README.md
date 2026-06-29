@@ -69,11 +69,10 @@ let mut timer: FrameTimer<64, QuantaTime> = FrameTimer::new();
 
 This project uses [`just`][] to run commands the same way as CI:
 
-- `cargo just check` — check formatting and lints
-- `cargo just test` — run tests
-- `cargo just coverage` — generate and preview code coverage
-- `cargo just doc` — generate and preview docs
-- `cargo just semver-checks` — verify no accidental breaking changes
+- `just check` — check formatting and lints
+- `just test` — run tests
+- `just coverage` — generate and preview code coverage
+- `just doc` — generate and preview docs
 
 [`just`]: https://crates.io/crates/just
 
