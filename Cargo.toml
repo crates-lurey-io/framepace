@@ -1,0 +1,45 @@
+[workspace]
+members = ["tools/cargo-bin"]
+resolver = "2"
+
+[workspace.metadata.bin]
+cargo-nextest = { version = "0.9.98", locked = true }
+cargo-llvm-cov = { version = "0.6.16", locked = true }
+cargo-hack = { version = "0.6.45", locked = true }
+cargo-semver-checks = { version = "0.48.0", locked = true }
+just = { version = "1.40.0" }
+
+[package]
+name = "framepace"
+edition = "2024"
+version = "0.1.0"
+rust-version = "1.87"
+authors = ["Matan Lurey <matan@lurey.org>"]
+license = "MIT OR Apache-2.0"
+description = "Rolling frame-time statistics for game loops and real-time applications"
+repository = "https://github.com/crates-lurey-io/framepace"
+homepage = "https://github.com/crates-lurey-io/framepace"
+documentation = "https://docs.rs/framepace"
+keywords = ["game-development", "performance", "timing", "frame-rate", "profiling"]
+categories = ["game-development", "development-tools::profiling"]
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "deny"
+unreachable_pub = "warn"
+unused_qualifications = "warn"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+must_use_candidate = "deny"
+missing_errors_doc = "deny"
+missing_panics_doc = "deny"
+module_name_repetitions = "allow"
+# Ring-buffer indexing is bounded by construction via `% N`; allowing here
+# avoids noise while keeping all other bounds-checking lints active.
+indexing_slicing = "allow"
+
+[package.metadata.docs.rs]
+all-features = true
