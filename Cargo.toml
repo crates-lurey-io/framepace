@@ -1,7 +1,7 @@
 [package]
 name = "framepace"
 edition = "2024"
-version = "0.1.0"
+version = "0.1.0-alpha.0"
 rust-version = "1.87"
 authors = ["Matan Lurey <matan@lurey.org>"]
 license = "MIT OR Apache-2.0"
